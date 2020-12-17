@@ -89,3 +89,55 @@ multiple images request->
             }
         }
     
+    /////////////////////////////////
+    
+    CategoriesModel spinner model class
+    
+    private fun setSpinner(result: ArrayList<CategoriesModel>) {
+        sp_categories.adapter = object : ArrayAdapter<CategoriesModel>(
+            requireActivity(),
+           android.R.layout.simple_spinner_item,
+            result
+        ) {
+            var typeface = ResourcesCompat.getFont(requireActivity(), R.font.poppins_semibold)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val label = super.getView(position, convertView, parent) as TextView
+                label.setTypeface(typeface)
+                label.text = getItem(position)?.Text
+                return label
+            }
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val label = super.getView(position, convertView, parent) as TextView
+                label.setTypeface(typeface)
+                label.text = getItem(position)?.Text
+                return label
+            }
+        }
+
+        sp_categories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                var calories = result.get(position)
+                var Id = calories.Value
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    

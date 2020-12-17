@@ -39,3 +39,53 @@ multiple images request->
             setImages(mResults)
         }
     
+    
+     @SuppressLint("NewApi")
+        var currencyAdapter: ArrayAdapter<String> = object :
+            ArrayAdapter<String>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                listDataCurrency//list string type
+            ) {
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val v = super.getDropDownView(position, convertView, parent)
+                val tv = v as TextView
+                tv.setText(listDataCurrency.get(position))
+                tv.setTextColor(requireActivity().getColor(R.color.TextColor))
+                return v
+            }
+
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v = super.getDropDownView(position, convertView, parent)
+                val tv = v as TextView
+                tv.setText(listDataCurrency.get(position))
+                tv.setTextColor(requireActivity().getColor(R.color.TextColor))
+                return v
+            }
+        }
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+       spinnerCountry.adapter = currencyAdapter
+    
+    
+    spinnerCountry.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+            //get id from List a
+            catId=catList.get(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+    

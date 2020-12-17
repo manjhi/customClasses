@@ -1,0 +1,41 @@
+
+use depencency-> https://github.com/nguyenhoanglam/ImagePicker
+multiple images request-> 
+
+
+    private var mResults: java.util.ArrayList<String> = ArrayList()
+    private var mResults1: java.util.ArrayList<Image> = ArrayList()
+
+        MultipleImageGallery(1,mResults1)
+
+ open fun MultipleImageGallery(code:Int,mResults1:ArrayList<Image>){
+        ImagePicker.with(this)
+            .setFolderMode(true)
+            .setShowCamera(true)
+            .setFolderTitle("Album")
+            .setRootDirectoryName(Config.ROOT_DIR_DCIM)
+            .setDirectoryName("Image Picker")
+            .setMultipleMode(true)
+            .setShowNumberIndicator(true)
+            .setMaxSize(10)
+            .setLimitMessage("You can select up to 10 images")
+            .setRequestCode(code)
+            .setSelectedImages(mResults1)
+            .start();
+    }
+    
+    
+    onActivity Result-> 
+     if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, 1)) {
+            imagesLayouts.visibility = View.VISIBLE
+            mResults1 = ImagePicker.getImages(data)
+            mResults.clear()
+            mResultsSendFile.clear()
+            for (image in mResults1) {
+                Log.e("DATA",image.path)
+                mResults.add("file://${image.path}")
+                mResultsSendFile.add(image.path)
+            }
+            setImages(mResults)
+        }
+    

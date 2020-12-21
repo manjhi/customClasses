@@ -1,0 +1,48 @@
+//login class
+
+
+////onCraete
+
+  if (getRemember(PrefrencesEndPoint.IS_REMEMBER, false)) {
+            etMail.setText(getRemember(PrefrencesEndPoint.REMEMBER_EMAIL, ""))
+            etPassword.setText(getRemember(PrefrencesEndPoint.REMEMBER_PASSWORD, ""))
+            rememberBox.isChecked = true
+        }
+
+
+
+////after response
+
+ if (rememberBox.isChecked) {
+                    saveRememberMe(PrefrencesEndPoint.IS_REMEMBER, true)
+                    saveRememberMe(PrefrencesEndPoint.REMEMBER_EMAIL, email)
+                    saveRememberMe(PrefrencesEndPoint.REMEMBER_PASSWORD, password)
+                }else{
+                    saveRememberMe(PrefrencesEndPoint.IS_REMEMBER, false)
+                }
+
+
+////rememberMe Preference
+
+fun saveRememberMe(key: String,value: Any) {
+    val preference =
+        App.application.applicationContext.getSharedPreferences("tank_exchange_remember", 0)
+    val editor = preference.edit()
+    when (value) {
+        is String -> editor.putString(key, value)
+        is Boolean -> editor.putBoolean(key, value)
+        is Int -> editor.putInt(key, value)
+    }
+    editor.commit()
+}
+
+inline fun <reified T> getRemember(key: String, deafultValue: T): T {
+    val preference = App.application.applicationContext.getSharedPreferences("tank_exchange_remember", 0)
+    return when (T::class) {
+        String::class -> preference.getString(key, deafultValue as String) as T
+        Boolean::class -> preference.getBoolean(key, deafultValue as Boolean) as T
+        Int::class -> preference.getInt(key, deafultValue as Int) as T
+        else -> {
+            " " as T
+        }
+    }
